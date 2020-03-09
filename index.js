@@ -1,7 +1,21 @@
 const express = require('express');
 const path = require('path');
+const members = require('./Members');
+const logger = require('./middleware/logger');
 
 const app = express();
+
+
+//Init middleware
+app.use(logger);
+
+//Deal with rest API
+//Get all members
+app.get('/api/members', (req,res)=>{
+    res.json(members);
+});
+
+
 
 //res.render -> Html template : pug,ejs
 //res.send -> send text, html code
