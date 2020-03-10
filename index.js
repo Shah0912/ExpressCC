@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const members = require('./Members');
 const logger = require('./middleware/logger');
 
 const app = express();
@@ -9,12 +8,7 @@ const app = express();
 //Init middleware
 app.use(logger);
 
-//Deal with rest API
-//Get all members
-app.get('/api/members', (req,res)=>{
-    res.json(members);
-});
-
+//
 
 
 //res.render -> Html template : pug,ejs
@@ -22,12 +16,14 @@ app.get('/api/members', (req,res)=>{
 //res.sendfile -> Send file
 //res.json -> send json
 
-//static server : Dont need to route individually
-//No need to write routes for each html file
 
 /* app.get('/', (req, res) => {
     res.sendfile(path.join(__dirname,'public','index.html'));
 }); */
+
+
+//static server : Dont need to route individually
+//No need to write routes for each html file
 
 //Set static folder
 //After adding as static
@@ -35,6 +31,10 @@ app.get('/api/members', (req,res)=>{
 //We can even add css files to static folder
 //Use is used whenever we want to include middleware
 app.use(express.static(path.join(__dirname,'public')));
+
+//Members api route
+app.use('/api/members', require('./routes/api/members'));
+
 
 
 const PORT = process.env.PORT || 5000;
